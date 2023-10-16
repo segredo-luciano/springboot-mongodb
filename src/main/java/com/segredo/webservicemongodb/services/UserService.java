@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.segredo.webservicemongodb.domain.User;
+import com.segredo.webservicemongodb.dto.UserDTO;
 import com.segredo.webservicemongodb.repository.UserRepository;
 import com.segredo.webservicemongodb.services.exception.ObjectNotFoundException;
 
@@ -26,5 +27,11 @@ public class UserService {
 		return user.orElseThrow(() -> new ObjectNotFoundException("this id does not exist! id: " + id));		
 	}
 	
+	public User save(User user) {
+		return userRepository.insert(user);
+	}
 	
+	public User fromDTO(UserDTO userDTO) {
+		return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
+	}
 }
