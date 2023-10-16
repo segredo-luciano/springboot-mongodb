@@ -1,12 +1,14 @@
 package com.segredo.webservicemongodb.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.segredo.webservicemongodb.domain.User;
 import com.segredo.webservicemongodb.repository.UserRepository;
+import com.segredo.webservicemongodb.services.exception.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -17,4 +19,12 @@ public class UserService {
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
+	
+	public User findById(String id) {
+		Optional<User> user = userRepository.findById(id);
+				
+		return user.orElseThrow(() -> new ObjectNotFoundException("this id does not exist! id: " + id));		
+	}
+	
+	
 }
