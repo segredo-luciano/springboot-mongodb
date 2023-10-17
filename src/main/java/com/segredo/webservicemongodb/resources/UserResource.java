@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.segredo.webservicemongodb.domain.Post;
 import com.segredo.webservicemongodb.domain.User;
 import com.segredo.webservicemongodb.dto.UserDTO;
 import com.segredo.webservicemongodb.services.UserService;
@@ -68,5 +69,12 @@ public class UserResource {
 		User user = userService.update(id, name, email);
 		
 		return ResponseEntity.ok().body(user);
+	}
+	
+	@GetMapping(value="/{id}/posts")
+	public ResponseEntity<List<Post>> findByPosts(@PathVariable String id) {		
+		User user= userService.findById(id);		
+		
+		return ResponseEntity.ok().body(user.getPosts());
 	}
 }
