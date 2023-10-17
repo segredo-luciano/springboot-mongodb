@@ -1,5 +1,6 @@
 package com.segredo.webservicemongodb.resources;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,19 @@ public class PostResource {
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="text", defaultValue="") String text) {
 		text = URL.decodeParam(text);
 		List<Post> post = postService.findByTitle(text);
+		
+		return ResponseEntity.ok().body(post);
+	}
+	
+	@GetMapping(value="/fullsearch")
+	public ResponseEntity<List<Post>> fullSearch(
+			@RequestParam(value="text", defaultValue="") String text,
+			@RequestParam(value="minDate", defaultValue="") String minDate,
+			@RequestParam(value="maxDate", defaultValue="") String maxDate){
+		text = URL.decodeParam(text);
+		LocalDate min= URL.convertDate(minDate, LocalDate.parse("1970-01-01"));
+		LocalDate max= URL.convertDate(maxDate, LocalDate.now());
+		List<Post> post = postService.fullSearch(text, min, max);
 		
 		return ResponseEntity.ok().body(post);
 	}
