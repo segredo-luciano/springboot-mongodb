@@ -34,4 +34,21 @@ public class UserService {
 	public User fromDTO(UserDTO userDTO) {
 		return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
 	}
+	
+	public void delete(String id) {
+		userRepository.deleteById(id);
+	}
+	
+	public User update(String id, String name, String email) {
+		try {
+			User existingUser = findById(id);
+			
+			existingUser.setName(name);
+			existingUser.setEmail(email);
+			
+			return userRepository.save(existingUser);
+		} catch(Exception enfe) {
+			throw new ObjectNotFoundException("There is no object with the given id");
+		}
+	}
 }
