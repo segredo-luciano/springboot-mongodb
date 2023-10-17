@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.segredo.webservicemongodb.domain.AuthorDTO;
 import com.segredo.webservicemongodb.domain.Post;
 import com.segredo.webservicemongodb.domain.User;
 import com.segredo.webservicemongodb.repository.PostRepository;
@@ -32,13 +33,14 @@ public class Instantiation implements CommandLineRunner {
 		User userT = new User(null, "Alex Green", "lelex00@gmail.com");
 		User userTh = new User(null, "Bob Grey", "bobb@gmail.com");
 		
+		userRepository.saveAll(Arrays.asList(user, userT, userTh));
+		
 		LocalDate dateCustom = LocalDate.parse("21/07/2023", dtf);
 		LocalDate dateCustomT = LocalDate.parse("23/03/2023", dtf);
 
-		Post post = new Post(null, dateCustom, "to travel", "Going to travel to São Paulo. Bye", user);
-		Post postT = new Post(null, dateCustomT, "Morning", "Wake up while the sun still bright!", user);
-		
-		userRepository.saveAll(Arrays.asList(user, userT, userTh));
+		Post post = new Post(null, dateCustom, "to travel", "Going to travel to São Paulo. Bye", new AuthorDTO(user));
+		Post postT = new Post(null, dateCustomT, "Morning", "Wake up while the sun still bright!", new AuthorDTO(user));
+				
 		postRepository.saveAll(Arrays.asList(post, postT));
 	}
 
