@@ -1,5 +1,6 @@
 package com.segredo.webservicemongodb.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,9 @@ public class PostService {
 		Optional<Post> post = postRepository.findById(id);
 		
 		return post.orElseThrow(() -> new ObjectNotFoundException("this id does not exist! id: " + id));
+	}
+	
+	public List<Post> findByTitle(String text) {
+		return postRepository.findByTitleContainingIgnoreCase(text);
 	}
 }
