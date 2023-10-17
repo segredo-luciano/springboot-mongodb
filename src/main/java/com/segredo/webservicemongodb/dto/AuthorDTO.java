@@ -1,6 +1,8 @@
-package com.segredo.webservicemongodb.domain;
+package com.segredo.webservicemongodb.dto;
 
 import java.io.Serializable;
+
+import com.segredo.webservicemongodb.domain.User;
 
 public class AuthorDTO implements Serializable {
 
